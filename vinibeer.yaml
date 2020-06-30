@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vinibeer
+  labels:
+    app: vinibeer
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: vinibeer
+      labels:
+        app: vinibeer
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": windows
+      containers:
+      - name: vinibeer
+        image: viniapregistry.azurecr.io/vinibeerimage:v1
+        resources:
+          limits:
+            cpu: 1
+            memory: 800M
+          requests:
+            cpu: .1
+            memory: 300M
+        ports:
+          - containerPort: 80
+  selector:
+    matchLabels:
+      app: vinibeer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vinibeer
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+  selector:
+    app: vinibeer
