@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vinibeer1
+  name: vinibeer
   labels:
     app: vinibeer
 spec:
