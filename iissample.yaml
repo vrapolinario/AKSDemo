@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vinibeer
+  name: iissample
   labels:
-    app: vinibeer
+    app: iissample
 spec:
-  replicas: 3
+  replicas: 2
   template:
     metadata:
-      name: vinibeer
+      name: iissample
       labels:
-        app: vinibeer
+        app: iissample
     spec:
       nodeSelector:
-        "beta.kubernetes.io/os": windows
+        "kubernetes.io/os": windows
       containers:
-      - name: vinibeer
-        image: viniapregistry.azurecr.io/vinibeerimage:v1
+      - name: iissample
+        image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
         resources:
           limits:
             cpu: 1
@@ -26,18 +26,20 @@ spec:
             memory: 300M
         ports:
           - containerPort: 80
+      imagePullSecrets:
+      - name: regcred
   selector:
     matchLabels:
-      app: vinibeer
+      app: iissample
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: vinibeer
+  name: iissample
 spec:
   type: LoadBalancer
   ports:
   - protocol: TCP
     port: 80
   selector:
-    app: vinibeer
+    app: iissample
