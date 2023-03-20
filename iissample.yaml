@@ -13,10 +13,10 @@ spec:
         app: iissample
     spec:
       nodeSelector:
-        "kubernetes.io/os": windows
+        "kubernetes.azure.com/os-sku": Windows2022
       containers:
       - name: iissample
-        image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+        image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2022
         resources:
           limits:
             cpu: 1
@@ -26,8 +26,6 @@ spec:
             memory: 300M
         ports:
           - containerPort: 80
-      imagePullSecrets:
-      - name: regcred
   selector:
     matchLabels:
       app: iissample
